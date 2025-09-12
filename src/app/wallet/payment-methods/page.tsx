@@ -222,7 +222,7 @@ export default function PaymentMethodsPage() {
               {/* Payment Type Selection */}
               <div>
                 <Label>Payment Method Type</Label>
-                <Select value={paymentType} onValueChange={(value: 'card' | 'bank_account') => setPaymentType(value)}>
+                <Select value={paymentType} onValueChange={(value: string) => setPaymentType(value as 'card' | 'bank_account')}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>

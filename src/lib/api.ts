@@ -84,7 +84,6 @@ class ApiService {
         defaultHeaders;
       
       const config: RequestInit = {
-        timeout: 10000, // 10 second timeout
         ...options,
         headers,
       };

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import { ArrowLeft, DollarSign, Users, AlertTriangle, CheckCircle, Clock, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,11 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 
-interface CampaignFundingPageProps {
-  params: { id: string };
-}
-
-export default function CampaignFundingPage({ params }: CampaignFundingPageProps) {
+export default function CampaignFundingPage() {
+  const params = useParams();
+  const id = params.id as string;
   const [showFundModal, setShowFundModal] = useState(false);
   const [fundingAmount, setFundingAmount] = useState("");
   const [fundingType, setFundingType] = useState<'agency_wallet' | 'client_payment'>('agency_wallet');
@@ -20,14 +19,14 @@ export default function CampaignFundingPage({ params }: CampaignFundingPageProps
 
   // Mock campaign data with funding details - will come from API
   const campaignData = {
-    id: params.id,
+    id: id,
     name: "Lagos Traffic Campaign",
     client: { id: '1', name: 'Coca Cola Nigeria', wallet_balance: 50000 },
     total_budget: 75000,
     funding_source: 'shared' as const,
     agency_contribution: 30000,
     client_contribution: 45000,
-    funding_status: 'partial' as const,
+    funding_status: 'partial' as 'pending' | 'partial' | 'funded',
     funded_amount: 30000,
     remaining_amount: 45000,
     status: 'pending_funding',
@@ -68,7 +67,7 @@ export default function CampaignFundingPage({ params }: CampaignFundingPageProps
     
     try {
       // TODO: Process funding based on type
-      console.log("Provide funding:", { amount, fundingType, campaignId: params.id });
+      console.log("Provide funding:", { amount, fundingType, campaignId: id });
       
       // Simulate funding process
       await new Promise(resolve => setTimeout(resolve, 2000));

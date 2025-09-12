@@ -1168,7 +1168,7 @@ function FundingSourceStep({
               )}
               
               <div className="space-y-4">
-                {(formData.funding_source === 'shared' || formData.funding_source === 'agency') && (
+                {((formData.funding_source as any) === 'shared' || (formData.funding_source as any) === 'agency') && (
                   <div>
                     <Label htmlFor="agencyContribution">Agency Contribution (NGN)</Label>
                     <Input
@@ -2073,7 +2073,7 @@ function GeofenceForm({ initialData, onSave, onCancel, isEditing = false }: {
 
   // Calculate estimated budget
   const calculateEstimatedBudget = (): number => {
-    if (geofence.rate_type === 'per_hour' && startDate && endDate && geofence.rate_per_hour > 0 && geofence.max_riders > 0) {
+    if (geofence.rate_type === 'per_hour' && startDate && endDate && geofence.rate_per_hour && geofence.rate_per_hour > 0 && geofence.max_riders > 0) {
       const start = new Date(startDate);
       const end = new Date(endDate);
       const timeDiff = end.getTime() - start.getTime();
@@ -2133,7 +2133,7 @@ function GeofenceForm({ initialData, onSave, onCancel, isEditing = false }: {
       }
     };
     
-    if (!getCurrentRate() || getCurrentRate() <= 0) {
+    if (!getCurrentRate() || (getCurrentRate() || 0) <= 0) {
       errors.rate = 'Rate must be greater than 0';
     }
     

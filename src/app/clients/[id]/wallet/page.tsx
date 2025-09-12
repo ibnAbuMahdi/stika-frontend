@@ -1,24 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import { ArrowLeft, Plus, CreditCard, History, TrendingUp, AlertCircle, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-interface ClientWalletPageProps {
-  params: { id: string };
-}
-
-export default function ClientWalletPage({ params }: ClientWalletPageProps) {
+export default function ClientWalletPage() {
+  const params = useParams();
+  const id = params.id as string;
   const [showFundModal, setShowFundModal] = useState(false);
   const [fundAmount, setFundAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   // Mock client data - will come from API
   const clientData = {
-    id: params.id,
+    id: id,
     name: "Coca Cola Nigeria",
     client_type: "corporate",
     wallet: {
@@ -174,7 +173,7 @@ export default function ClientWalletPage({ params }: ClientWalletPageProps) {
                           <p className="text-sm text-gray-600">Requires funding to start</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-semibold text-amber-700">₦{campaign.required_amount.toLocaleString()}</p>
+                          <p className="font-semibold text-amber-700">₦{campaign.required_amount?.toLocaleString() || '0'}</p>
                           <Badge variant="warning" size="sm">Pending</Badge>
                         </div>
                       </div>
