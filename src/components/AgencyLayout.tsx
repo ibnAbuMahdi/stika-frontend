@@ -81,11 +81,7 @@ export default function AgencyLayout({ children }: AgencyLayoutProps) {
     {
       name: 'Dashboard',
       href: '/dashboard',
-      icon: () => (
-        <div className="w-5 h-5 bg-current rounded-sm flex items-center justify-center">
-          <div className="w-3 h-3 bg-white rounded-sm"></div>
-        </div>
-      )
+      icon: BarChart3
     },
     {
       name: 'Campaigns',

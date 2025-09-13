@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, AlertCircle, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-export default function ActivateAccountPage() {
+function ActivateAccountContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
@@ -142,5 +142,25 @@ export default function ActivateAccountPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function ActivateAccountPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
+        <div className="w-full max-w-md">
+          <Card className="p-8 border-0 shadow-lg">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Loading...</h1>
+              <p className="text-gray-600">Please wait...</p>
+            </div>
+          </Card>
+        </div>
+      </div>
+    }>
+      <ActivateAccountContent />
+    </Suspense>
   );
 }

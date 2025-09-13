@@ -3,7 +3,7 @@
  * Handles all HTTP requests to the Django backend
  */
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://bold-sun-8647.fly.dev/api/v1';
 
 interface ApiResponse<T = any> {
   success: boolean;

@@ -158,12 +158,53 @@ export default function CampaignsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setCampaigns(mockCampaigns);
-      setIsLoading(false);
-    }, 1000);
+    loadCampaigns();
   }, []);
+
+  const loadCampaigns = async () => {
+    try {
+      setIsLoading(true);
+      const { apiService } = await import('@/lib/api');
+      
+      // Fetch campaigns from backend
+      const response = await apiService.getCampaigns();
+      
+      if (response.success && response.campaigns) {
+        // Transform backend campaigns to match our Campaign interface
+        const backendCampaigns: Campaign[] = response.campaigns.map((campaign: any) => ({
+          id: campaign.id,
+          name: campaign.name,
+          status: campaign.status as Campaign['status'],
+          budget: campaign.total_budget || 0,
+          spent: campaign.total_spent || 0,
+          duration: campaign.geofences_count ? 30 : 0, // Default duration, could be calculated from start/end dates
+          remainingDays: 0, // Would need calculation based on actual dates
+          riders: campaign.total_required_riders || 0,
+          impressions: campaign.actual_impressions || 0,
+          targetLocation: 'Multiple locations', // Could be calculated from geofences
+          createdAt: campaign.created_at || new Date().toISOString(),
+          funding_source: 'agency' as const, // Default, could come from backend
+          agency_contribution: campaign.total_budget || 0,
+          client_contribution: 0,
+          total_campaign_cost: campaign.total_budget || 0
+        }));
+        
+        // Combine backend campaigns with mock campaigns
+        const allCampaigns = [...backendCampaigns, ...mockCampaigns];
+        setCampaigns(allCampaigns);
+      } else {
+        // Fallback to mock campaigns only
+        console.warn('Failed to fetch campaigns from backend, using mock data');
+        setCampaigns(mockCampaigns);
+      }
+    } catch (error) {
+      console.error('Error loading campaigns:', error);
+      // Fallback to mock campaigns
+      setCampaigns(mockCampaigns);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const filteredCampaigns = campaigns.filter(campaign => {
     const matchesSearch = campaign.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
