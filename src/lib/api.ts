@@ -212,6 +212,28 @@ class ApiService {
     });
   }
 
+  async forgotPassword(email: string): Promise<ApiResponse> {
+    // Forgot password endpoint should not include authorization header
+    return this.request('/auth/web/forgot-password/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+  }
+
+  async resetPassword(token: string, email: string, password: string, confirmPassword: string): Promise<ApiResponse> {
+    // Reset password endpoint should not include authorization header
+    return this.request('/auth/web/reset-password/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token, email, password, confirmPassword }),
+    });
+  }
+
   async getUserProfile(): Promise<ApiResponse<{ user: User }>> {
     return this.request('/auth/web/profile/', {
       method: 'GET',

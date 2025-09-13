@@ -260,7 +260,7 @@ export default function CampaignsPage() {
     }
   };
 
-  const handleCampaignAction = (campaignId: string, action: string) => {
+  const handleCampaignAction = async (campaignId: string, action: string) => {
     console.log(`Action: ${action} on campaign: ${campaignId}`);
     
     switch (action) {
@@ -271,10 +271,7 @@ export default function CampaignsPage() {
         router.push(`/campaigns/create?edit=${campaignId}`);
         break;
       case 'delete':
-        if (confirm('Are you sure you want to delete this campaign?')) {
-          // TODO: API call to delete campaign
-          console.log(`Deleting campaign ${campaignId}`);
-        }
+        await handleDeleteCampaign(campaignId);
         break;
       case 'submit':
         // TODO: API call to submit for approval
@@ -286,6 +283,45 @@ export default function CampaignsPage() {
         break;
       default:
         console.log(`Unknown action: ${action}`);
+    }
+  };
+
+  const handleDeleteCampaign = async (campaignId: string) => {
+    const campaign = campaigns.find(c => c.id === campaignId);
+    
+    if (!campaign) {
+      alert('Campaign not found');
+      return;
+    }
+
+    // Check if campaign can be deleted
+    if (campaign.status !== 'draft' && campaign.status !== 'rejected') {
+      alert(`Cannot delete campaign in ${campaign.status} status. Only draft and rejected campaigns can be deleted.`);
+      return;
+    }
+
+    const confirmMessage = `Are you sure you want to delete "${campaign.name}"?\n\nThis action cannot be undone.`;
+    
+    if (!confirm(confirmMessage)) {
+      return;
+    }
+
+    try {
+      const { apiService } = await import('@/lib/api');
+      const response = await apiService.deleteCampaign(campaignId);
+
+      if (response.success) {
+        // Remove campaign from local state
+        setCampaigns(prevCampaigns => 
+          prevCampaigns.filter(c => c.id !== campaignId)
+        );
+        alert('Campaign deleted successfully');
+      } else {
+        alert(response.message || 'Failed to delete campaign');
+      }
+    } catch (error: any) {
+      console.error('Error deleting campaign:', error);
+      alert(error.message || 'Failed to delete campaign');
     }
   };
 
