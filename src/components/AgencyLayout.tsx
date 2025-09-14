@@ -28,22 +28,53 @@ export default function AgencyLayout({ children }: AgencyLayoutProps) {
       if (apiService.isAuthenticated()) {
         const response = await apiService.getUserProfile();
         if (response.success && response.user) {
-          setUserData(response.user);
-          localStorage.setItem('user', JSON.stringify(response.user));
+          // Validate user type for agency dashboard access
+          if (response.user.user_type === "agency" || response.user.user_type === "agency_admin") {
+            setUserData(response.user);
+            localStorage.setItem('user', JSON.stringify(response.user));
+          } else {
+            // Unauthorized user type - clear tokens and redirect
+            console.log('Unauthorized user type for agency dashboard:', response.user.user_type);
+            apiService.clearAuthTokens();
+            if (response.user.user_type === "client") {
+              router.push('/client-dashboard');
+            } else {
+              router.push('/auth/login');
+            }
+            return;
+          }
         }
       } else {
-        // Fallback to localStorage
+        // Fallback to localStorage with validation
         const localUserData = localStorage.getItem('user');
         if (localUserData) {
-          setUserData(JSON.parse(localUserData));
+          const parsedUser = JSON.parse(localUserData);
+          // Validate user type before using cached data
+          if (parsedUser.user_type === "agency" || parsedUser.user_type === "agency_admin") {
+            setUserData(parsedUser);
+          } else {
+            // Invalid user type in cache - clear and redirect
+            console.log('Invalid cached user type for agency dashboard:', parsedUser.user_type);
+            localStorage.removeItem('user');
+            if (parsedUser.user_type === "client") {
+              router.push('/client-dashboard');
+            } else {
+              router.push('/auth/login');
+            }
+            return;
+          }
+        } else {
+          // No user data available - redirect to login
+          router.push('/auth/login');
+          return;
         }
       }
     } catch (error) {
       console.error('Failed to load user data:', error);
-      const localUserData = localStorage.getItem('user');
-      if (localUserData) {
-        setUserData(JSON.parse(localUserData));
-      }
+      // Clear potentially corrupted data and redirect
+      const { apiService } = await import('@/lib/api');
+      apiService.clearAuthTokens();
+      router.push('/auth/login');
     }
   };
 

@@ -41,8 +41,54 @@ export default function DashboardPage() {
   const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
-    loadDashboardData();
+    // Check user authorization before loading dashboard data
+    checkUserAuthorization();
   }, []);
+
+  const checkUserAuthorization = async () => {
+    try {
+      const { apiService } = await import('@/lib/api');
+      
+      // Check if user is authenticated
+      if (!apiService.isAuthenticated()) {
+        router.push('/auth/login');
+        return;
+      }
+
+      // Get user data to validate user type
+      let currentUser = null;
+      try {
+        const response = await apiService.getUserProfile();
+        if (response.success && response.user) {
+          currentUser = response.user;
+        }
+      } catch (error) {
+        // Fallback to localStorage
+        const localUserData = localStorage.getItem('user');
+        if (localUserData) {
+          currentUser = JSON.parse(localUserData);
+        }
+      }
+
+      // Validate user type
+      if (!currentUser || (currentUser.user_type !== 'agency' && currentUser.user_type !== 'agency_admin')) {
+        console.log('Unauthorized access to agency dashboard:', currentUser?.user_type);
+        apiService.clearAuthTokens();
+        if (currentUser?.user_type === 'client') {
+          router.push('/client-dashboard');
+        } else {
+          router.push('/auth/login');
+        }
+        return;
+      }
+
+      // User is authorized, proceed with loading dashboard data
+      loadDashboardData();
+    } catch (error) {
+      console.error('Authorization check failed:', error);
+      router.push('/auth/login');
+    }
+  };
 
   const loadDashboardData = async () => {
     try {

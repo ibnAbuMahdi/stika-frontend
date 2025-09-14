@@ -68,35 +68,49 @@ export default function ClientDashboard() {
       try {
         // First try to get fresh user data from API
         const { apiService } = await import('@/lib/api');
-        if (apiService.isAuthenticated()) {
+        
+        // Check if user is authenticated
+        if (!apiService.isAuthenticated()) {
+          router.push('/auth/login');
+          return;
+        }
+
+        let currentUser = null;
+        try {
           const response = await apiService.getUserProfile();
           if (response.success && response.user) {
             console.log('User profile from API:', response.user);
-            setUser(response.user);
-            localStorage.setItem('user', JSON.stringify(response.user));
-            
-            // Only call loadJoinStatus if user is a client
-            if (response.user?.user_type === 'client') {
-              loadJoinStatus(response.user);
-            }
-            return;
+            currentUser = response.user;
+          }
+        } catch (error) {
+          console.error('Failed to get fresh user profile:', error);
+          // Fallback to localStorage if API call fails
+          const userData = localStorage.getItem("user");
+          if (userData) {
+            currentUser = JSON.parse(userData);
+            console.log('User data from localStorage:', currentUser);
           }
         }
-      } catch (error) {
-        console.error('Failed to get fresh user profile:', error);
-      }
-      
-      // Fallback to localStorage if API call fails
-      const userData = localStorage.getItem("user");
-      if (userData) {
-        const parsedUser = JSON.parse(userData);
-        console.log('User data from localStorage:', parsedUser);
-        setUser(parsedUser);
-        
-        // Only call loadJoinStatus if user is a client
-        if (parsedUser?.user_type === 'client') {
-          loadJoinStatus(parsedUser);
+
+        // Validate user type
+        if (!currentUser || currentUser.user_type !== 'client') {
+          console.log('Unauthorized access to client dashboard:', currentUser?.user_type);
+          apiService.clearAuthTokens();
+          if (currentUser?.user_type === 'agency' || currentUser?.user_type === 'agency_admin') {
+            router.push('/dashboard');
+          } else {
+            router.push('/auth/login');
+          }
+          return;
         }
+
+        // User is authorized, set user data and load join status
+        setUser(currentUser);
+        localStorage.setItem('user', JSON.stringify(currentUser));
+        loadJoinStatus(currentUser);
+      } catch (error) {
+        console.error('User initialization failed:', error);
+        router.push('/auth/login');
       }
     };
     

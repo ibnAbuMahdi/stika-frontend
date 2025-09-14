@@ -254,15 +254,29 @@ class ApiService {
   }
 
   async logout(): Promise<void> {
-    // Clear tokens from local storage
-    this.clearAuthTokens();
-    
-    // Optional: Call backend logout endpoint if it exists
-    // try {
-    //   await this.request('/auth/web/logout/', { method: 'POST' });
-    // } catch (error) {
-    //   // Ignore logout endpoint errors - clearing tokens is sufficient
-    // }
+    try {
+      // Optional: Call backend logout endpoint if it exists
+      // await this.request('/auth/web/logout/', { method: 'POST' });
+    } catch (error) {
+      // Ignore logout endpoint errors - clearing tokens is the priority
+      console.warn('Backend logout failed, proceeding with local cleanup:', error);
+    } finally {
+      // Always clear tokens and user data regardless of backend response
+      this.clearAuthTokens();
+      
+      // Additional cleanup to ensure no stale data remains
+      if (typeof window !== 'undefined') {
+        // Clear any other potential auth-related localStorage items
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && (key.includes('auth') || key.includes('token') || key === 'user')) {
+            keysToRemove.push(key);
+          }
+        }
+        keysToRemove.forEach(key => localStorage.removeItem(key));
+      }
+    }
   }
 
   // Auth helpers
