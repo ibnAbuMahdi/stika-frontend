@@ -392,11 +392,11 @@ export default function ClientDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Impressions</p>
-                  <p className="text-3xl font-bold text-gray-900">{totalImpressions.toLocaleString()}</p>
+                  <p className="text-sm font-medium text-gray-600">Total Spent</p>
+                  <p className="text-3xl font-bold text-gray-900">₦565,000</p>
                 </div>
                 <div className="p-3 bg-purple-100 rounded-lg">
-                  <Eye className="h-6 w-6 text-purple-600" />
+                  <DollarSign className="h-6 w-6 text-purple-600" />
                 </div>
               </div>
             </CardContent>
