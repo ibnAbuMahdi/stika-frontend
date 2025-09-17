@@ -427,7 +427,7 @@ export default function ClientDashboard() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Your Campaigns</CardTitle>
-                <Button disabled className="opacity-50 cursor-not-allowed">
+                <Button onClick={handleBrowseAgencies}>
                   <Plus className="h-4 w-4 mr-2" />
                   New Campaign
                 </Button>

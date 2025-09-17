@@ -80,29 +80,27 @@ export default function SignupPage() {
     <div className="min-h-screen flex">
       {/* Left Panel - Hero */}
       <div 
-        className="hidden lg:flex lg:w-1/2 items-center justify-center p-12 relative"
+        className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative"
         style={{
           backgroundImage: "url('/keke-bg.png')",
-          backgroundSize: "cover",
+          backgroundSize: "90%",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat"
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-purple-600/80 to-purple-800/80"></div>
-        <div className="text-center text-white max-w-md relative z-10">
-          <div className="mb-6">
-            <img 
-              src="/Stika.svg" 
-              alt="Stika Logo" 
-              className="w-32 h-auto mx-auto mb-4"
-            />
-          </div>
+        
+        {/* Top content */}
+        <div className="text-center text-white relative z-10">
           <h1 className="text-4xl font-bold mb-4">Welcome to Stika</h1>
-          <p className="text-lg mb-4 opacity-90">
-            Turning vehicles into mobile
+          <p className="text-lg opacity-90">
+            Turning tricycles into mobile billboards
           </p>
-          <p className="text-lg font-semibold mb-8">billboards</p>
-          <h2 className="text-3xl font-bold mt-8 mb-4">
+        </div>
+
+        {/* Bottom content */}
+        <div className="text-center text-white relative z-10">
+          <h2 className="text-3xl font-bold mb-4">
             Where Ads Meet the Road.
           </h2>
           <p className="text-base opacity-90">
