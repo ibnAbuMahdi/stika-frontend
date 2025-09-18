@@ -1,15 +1,20 @@
 @import "tailwindcss";
 
+/* Import Satoshi font from CDN */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap');
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-satoshi: 'Satoshi', var(--font-inter), system-ui, sans-serif;
+  --font-poppins: var(--font-poppins), system-ui, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-poppins);
+  --font-heading: var(--font-satoshi);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +27,19 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins);
+}
+
+/* Typography styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-satoshi);
+  font-weight: 600;
+}
+
+.font-heading {
+  font-family: var(--font-satoshi);
+}
+
+.font-body {
+  font-family: var(--font-poppins);
 }
