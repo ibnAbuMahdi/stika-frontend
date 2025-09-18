@@ -1486,11 +1486,10 @@ function CreativeBrandStep({ formData, errors, updateFormData }: StepProps) {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="1">1 time per week</SelectItem>
-            <SelectItem value="2">2 times per week</SelectItem>
-            <SelectItem value="3">3 times per week</SelectItem>
-            <SelectItem value="5">5 times per week</SelectItem>
-            <SelectItem value="7">Daily (7 times per week)</SelectItem>
+            <SelectItem value="1">Once per week</SelectItem>
+            <SelectItem value="2">Twice per week</SelectItem>
+            <SelectItem value="3">Thrice per week</SelectItem>
+            <SelectItem value="7">Every day</SelectItem>
           </SelectContent>
         </Select>
         <p className="text-sm text-gray-500 mt-1">How often riders need to submit verification photos</p>
@@ -1872,13 +1871,28 @@ function ReviewSubmitStep({ formData, clients }: { formData: CampaignFormData; c
   const totalRiders = formData.geofences.reduce((sum, g) => sum + g.max_riders, 0);
   const totalPickupLocations = formData.geofences.reduce((sum, g) => sum + g.pickup_locations.length, 0);
   
+  // Calculate verification fees
+  const calculateVerificationFees = () => {
+    let totalVerificationFee = 0;
+    formData.geofences.forEach(geofence => {
+      // Only calculate verification fees for fixed_daily rate type
+      if (geofence.rate_type === 'fixed_daily') {
+        const verificationFeePerRider = formData.verification_frequency * 50; // N50 per verification
+        totalVerificationFee += geofence.max_riders * verificationFeePerRider;
+      }
+    });
+    return totalVerificationFee;
+  };
+  
+  const verificationFees = calculateVerificationFees();
+  
   // Platform fees and VAT configuration
   const platformFeePercentage = 0; // 0% for now
   const vatPercentage = 0; // 0% for now
   
   // Calculate fees
   const platformFee = totalBudget * (platformFeePercentage / 100);
-  const subtotalWithPlatformFee = totalBudget + platformFee;
+  const subtotalWithPlatformFee = totalBudget + platformFee + verificationFees;
   const vatAmount = subtotalWithPlatformFee * (vatPercentage / 100);
   const totalCampaignCost = subtotalWithPlatformFee + vatAmount;
 
@@ -1912,6 +1926,14 @@ function ReviewSubmitStep({ formData, clients }: { formData: CampaignFormData; c
           <CardContent className="space-y-2">
             <div><span className="font-medium">Campaign Budget:</span> ₦{totalBudget.toLocaleString()}</div>
             <div><span className="font-medium">Platform Fee ({platformFeePercentage}%):</span> ₦{platformFee.toLocaleString()}</div>
+            <div>
+              <span className="font-medium">Verification Fees:</span> ₦{verificationFees.toLocaleString()}
+              {verificationFees > 0 && (
+                <p className="text-xs text-gray-500 mt-1">
+                  ₦50 × {formData.verification_frequency} verifications/week × {formData.geofences.filter(g => g.rate_type === 'fixed_daily').reduce((sum, g) => sum + g.max_riders, 0)} fixed-rate riders
+                </p>
+              )}
+            </div>
             <div><span className="font-medium">VAT ({vatPercentage}%):</span> ₦{vatAmount.toLocaleString()}</div>
             <div className="border-t pt-2">
               <span className="font-semibold text-lg">Total Campaign Cost: ₦{totalCampaignCost.toLocaleString()}</span>

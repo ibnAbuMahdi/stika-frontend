@@ -26,6 +26,8 @@ interface Campaign {
 }
 
 export default function DashboardPage() {
+  const [campaignFilter, setCampaignFilter] = useState<string>('all');
+  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [showWelcomeNotification, setShowWelcomeNotification] = useState(true);
@@ -242,6 +244,11 @@ export default function DashboardPage() {
     );
   }
 
+  // Filter logic for recent campaigns
+  const filteredCampaigns = campaignFilter === 'all'
+    ? campaigns
+    : campaigns.filter(c => c.status === campaignFilter);
+
   return (
     <AgencyLayout>
       {/* Welcome Notification */}
@@ -362,11 +369,27 @@ export default function DashboardPage() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Recent Campaigns</CardTitle>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm">
+                <div className="flex items-center gap-2 relative">
+                  <Button variant="outline" size="sm" onClick={() => setShowFilterDropdown(v => !v)}>
                     <Filter className="h-4 w-4 mr-2" />
                     Filter
                   </Button>
+                  {showFilterDropdown && (
+                    <div className="absolute top-10 right-0 bg-white border rounded shadow-lg z-10 min-w-[140px]">
+                      <ul className="py-2">
+                        {['all','active','submitted','approved','draft','completed'].map(status => (
+                          <li key={status}>
+                            <button
+                              className={`w-full text-left px-4 py-2 text-sm hover:bg-purple-50 ${campaignFilter === status ? 'font-bold text-purple-700' : 'text-gray-700'}`}
+                              onClick={() => { setCampaignFilter(status); setShowFilterDropdown(false); }}
+                            >
+                              {status.charAt(0).toUpperCase() + status.slice(1)}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <Button size="sm" onClick={() => router.push('/campaigns')}>
                     View all
                   </Button>
@@ -374,7 +397,7 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {campaigns.slice(0, 5).map((campaign) => (
+                  {filteredCampaigns.slice(0, 5).map((campaign) => (
                     <div key={campaign.id} className="flex items-center justify-between p-4 border rounded-lg">
                       <div className="flex items-center gap-4">
                         <div>

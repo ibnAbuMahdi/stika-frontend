@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Information - Stika Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background-color: #f9fafb;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        .logo img {
+            width: 48px;
+            height: 48px;
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            color: #1f2937;
+        }
+        
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.125rem;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .nav a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav a:hover {
+            color: #2563eb;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 1.875rem;
+            color: #1f2937;
+            margin: 2.5rem 0 1.5rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.375rem;
+            color: #374151;
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 1.125rem;
+            color: #4b5563;
+            margin: 1.5rem 0 0.75rem;
+            font-weight: 500;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: #4b5563;
+        }
+        
+        ul {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+        }
+        
+        strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .fee-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 2rem;
+        }
+        
+        .fee-card h3 {
+            color: #1f2937;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .fee-highlight {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .table-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .example-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        
+        .example-box h4 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+        
+        .important-note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        
+        .important-note h4 {
+            color: #d97706;
+            margin-top: 0;
+        }
+        
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .fee-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="/logo.svg" alt="Stika Logo">
+                <h1>Stika</h1>
+            </div>
+            <p class="subtitle">Transparent Pricing for Your Advertising Success</p>
+            <nav class="nav">
+                <a href="/getting-started.html">Getting Started</a>
+                <a href="/campaign-guide.html">Campaign Guide</a>
+                <a href="/faq.html">FAQ</a>
+            </nav>
+        </div>
+
+        <h1>How Stika Pricing Works</h1>
+        
+        <p style="font-size: 1.125rem; color: #1f2937; margin-bottom: 2rem;">
+            Stika operates on a simple, pay-per-campaign model with transparent fees. No monthly subscriptions, 
+            no hidden charges - just straightforward pricing that scales with your advertising needs.
+        </p>
+
+        <h2>Platform Fees</h2>
+        
+        <div class="fee-card">
+            <h3>Campaign Creation Fee</h3>
+            <p class="fee-highlight">5% of Campaign Budget</p>
+            <p>When you create a campaign, Stika charges a one-time platform fee of 5% of your total campaign budget.</p>
+            <ul>
+                <li>Fee is charged at campaign creation</li>
+                <li>Non-refundable once campaign is launched</li>
+                <li>Covers platform operations, technology, and support</li>
+                <li>Same rate for all agencies and clients</li>
+            </ul>
+        </div>
+
+        <div class="important-note">
+            <h4>Important Note</h4>
+            <p>The 5% platform fee is only refundable if you cancel the campaign before it launches. Once a campaign is launched, the fee becomes non-refundable.</p>
+        </div>
+
+        <h2>Campaign Rate Structure</h2>
+        
+        <div class="table-section">
+            <h3>Rate Types for Riders</h3>
+            <p>As an agency, you set competitive rates for riders in each geofence. There are two rate types:</p>
+            
+            <h4>1. Per Hour Rate</h4>
+            <ul>
+                <li>Riders are paid for actual hours worked in the geofence</li>
+                <li>Requires Android phones with GPS tracking</li>
+                <li>Real-time location verification</li>
+                <li>Flexible for riders with varying schedules</li>
+            </ul>
+            
+            <h4>2. Fixed Daily Rate</h4>
+            <ul>
+                <li>Riders receive a fixed payment per day</li>
+                <li>Suitable for riders without Android phones</li>
+                <li>Requires fleet captain verification</li>
+                <li>Additional ₦50 verification fee per verification</li>
+            </ul>
+        </div>
+
+        <div class="table-section">
+            <h3>Verification Fees (Fixed Daily Rate Only)</h3>
+            <p class="fee-highlight">₦50 per Verification</p>
+            <ul>
+                <li>Applies only to fixed daily rate campaigns</li>
+                <li>Paid to fleet captains who perform verifications</li>
+                <li>Added to your total campaign cost</li>
+                <li>Ensures rider compliance without GPS tracking</li>
+            </ul>
+        </div>
+
+        <h2>Rider Earnings</h2>
+        
+        <div class="fee-card">
+            <h3>Platform Fee for Riders</h3>
+            <p class="fee-highlight">5% of Earnings</p>
+            <p>Riders see rates that are 5% less than what agencies set, as Stika deducts a 5% platform fee from rider earnings.</p>
+            
+            <div class="example-box">
+                <h4>Example</h4>
+                <ul>
+                    <li>Agency sets rate: ₦200/hour</li>
+                    <li>Rider sees: ₦190/hour (after 5% deduction)</li>
+                    <li>Platform fee: ₦10/hour</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>Cost Calculation Examples</h2>
+
+        <div class="example-box">
+            <h4>Example 1: Small Local Campaign (Per Hour Rate)</h4>
+            <ul>
+                <li><strong>Campaign Budget:</strong> ₦100,000</li>
+                <li><strong>Platform Fee (5%):</strong> ₦5,000</li>
+                <li><strong>Available for Rider Payments:</strong> ₦95,000</li>
+                <li><strong>Agency Rate:</strong> ₦150/hour</li>
+                <li><strong>Rider Receives:</strong> ₦142.50/hour</li>
+                <li><strong>Total Campaign Hours:</strong> ~633 hours</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <h4>Example 2: Medium Campaign (Fixed Daily Rate)</h4>
+            <ul>
+                <li><strong>Campaign Budget:</strong> ₦500,000</li>
+                <li><strong>Platform Fee (5%):</strong> ₦25,000</li>
+                <li><strong>Available for Operations:</strong> ₦475,000</li>
+                <li><strong>Daily Rate:</strong> ₦2,000/day</li>
+                <li><strong>Verification Fee:</strong> ₦50/verification</li>
+                <li><strong>Estimated Verifications:</strong> 200 (₦10,000)</li>
+                <li><strong>Available for Rider Payments:</strong> ₦465,000</li>
+                <li><strong>Total Campaign Days:</strong> ~232 rider-days</li>
+            </ul>
+        </div>
+
+        <h2>Payment Process</h2>
+
+        <div class="table-section">
+            <h3>How It Works</h3>
+            <ol style="padding-left: 2rem;">
+                <li><strong>Fund Your Wallet:</strong> Add funds to your agency wallet via bank transfer or card</li>
+                <li><strong>Create Campaign:</strong> Set your budget and rates for each geofence</li>
+                <li><strong>Platform Fee Deduction:</strong> 5% is automatically deducted upon campaign creation</li>
+                <li><strong>Campaign Launch:</strong> Remaining budget is allocated for rider payments</li>
+                <li><strong>Real-time Tracking:</strong> Monitor spending as riders work</li>
+                <li><strong>Automatic Payments:</strong> Riders are paid based on verified work</li>
+            </ol>
+        </div>
+
+        <h2>Budget Management</h2>
+
+        <div class="table-section">
+            <h3>Campaign Budget Controls</h3>
+            <ul>
+                <li><strong>Pre-funded Model:</strong> Campaigns must be fully funded before launch</li>
+                <li><strong>Real-time Monitoring:</strong> Track spending against budget in real-time</li>
+                <li><strong>Automatic Stopping:</strong> Campaigns pause when budget is exhausted</li>
+                <li><strong>Budget Refunds:</strong> Unused budget is returned to wallet after campaign ends</li>
+            </ul>
+        </div>
+
+        <div class="table-section">
+            <h3>Shared Funding Options</h3>
+            <p>Campaigns can be funded by:</p>
+            <ul>
+                <li><strong>Agency Only:</strong> Full budget from agency wallet</li>
+                <li><strong>Client Only:</strong> Full budget from client wallet</li>
+                <li><strong>Shared Funding:</strong> Split between agency and client wallets</li>
+            </ul>
+        </div>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="table-section">
+            <h3>Q: Are there any hidden fees?</h3>
+            <p>A: No. The only fees are the 5% platform fee on campaign creation and ₦50 verification fees for fixed daily rate campaigns.</p>
+
+            <h3>Q: Can I get a refund on the platform fee?</h3>
+            <p>A: The platform fee is only refundable if you cancel the campaign before launching it. Once launched, the fee is non-refundable.</p>
+
+            <h3>Q: How do verification fees work?</h3>
+            <p>A: For fixed daily rate campaigns, fleet captains verify rider participation. Each verification costs ₦50, paid to the fleet captain. This ensures compliance for riders without smartphones.</p>
+
+            <h3>Q: What happens to unused campaign budget?</h3>
+            <p>A: Any unused budget after a campaign ends is automatically returned to the funding wallet(s), proportionally if shared funding was used.</p>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Stika Platform. All rights reserved.</p>
+            <p>Pricing subject to change. Last updated: December 2024</p>
+        </div>
+    </div>
+</body>
+</html>

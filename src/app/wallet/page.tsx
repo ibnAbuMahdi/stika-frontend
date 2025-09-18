@@ -175,7 +175,7 @@ export default function WalletPage() {
                   onClick={() => setShowFundModal(true)}
                 >
                   <Plus className="h-4 w-4 mr-2" />
-                  Fund Wallet
+                  Top-up
                 </Button>
                 
                 <Button variant="outline" className="w-full">
@@ -183,14 +183,14 @@ export default function WalletPage() {
                   Download Statement
                 </Button>
                 
-                <Button 
+                {/* <Button 
                   variant="outline" 
                   className="w-full"
                   onClick={() => window.location.href = "/wallet/payment-methods"}
                 >
                   <CreditCard className="h-4 w-4 mr-2" />
                   Payment Methods
-                </Button>
+                </Button> */}
               </CardContent>
             </Card>
 
@@ -209,14 +209,14 @@ export default function WalletPage() {
                     <span className="text-purple-600 font-bold">•</span>
                     <p>Funds are charged daily as campaigns run</p>
                   </div>
-                  <div className="flex items-start gap-2">
+                  {/* <div className="flex items-start gap-2">
                     <span className="text-purple-600 font-bold">•</span>
                     <p>
                       <a href="/wallet/auto-reload" className="text-purple-600 underline hover:text-purple-700">
                         Auto-reload available
                       </a> to maintain continuous campaigns
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
             </Card>
@@ -232,40 +232,34 @@ export default function WalletPage() {
               <CardTitle>Fund Wallet</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <label htmlFor="fundAmount" className="block text-sm font-medium text-gray-700 mb-2">
-                  Amount (NGN) *
-                </label>
-                <Input
-                  id="fundAmount"
-                  type="number"
-                  min="1000"
-                  placeholder="10000"
-                  value={fundAmount}
-                  onChange={(e) => setFundAmount(e.target.value)}
-                />
-                <p className="text-xs text-gray-500 mt-1">Minimum: ₦1,000</p>
-              </div>
+            
 
-              <div className="grid grid-cols-3 gap-2">
-                {[5000, 10000, 25000].map((amount) => (
-                  <Button
-                    key={amount}
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setFundAmount(amount.toString())}
-                  >
-                    ₦{amount.toLocaleString()}
-                  </Button>
-                ))}
-              </div>
-
+              {/* Bank Transfer Section */}
               <div className="bg-gray-50 p-4 rounded-lg">
-                <h4 className="font-medium mb-2">Payment Method</h4>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <CreditCard className="h-4 w-4" />
-                  <span>Paystack Gateway (Card/Bank Transfer)</span>
+                <h4 className="font-medium mb-2 text-purple-700">Bank Transfer</h4>
+                <div className="mb-2">
+                  <div className="text-sm text-gray-700 font-semibold">Account Name:</div>
+                  <div className="text-sm text-gray-900 mb-1">Stika Technologies Ltd</div>
+                  <div className="text-sm text-gray-700 font-semibold">Account Number:</div>
+                  <div className="text-sm text-gray-900 mb-1">0012195856</div>
+                  <div className="text-sm text-gray-700 font-semibold">Bank Name:</div>
+                  <div className="text-sm text-gray-900 mb-1">Taj Bank</div>
                 </div>
+                <div className="text-xs text-gray-600 mt-2">
+                  Transfer the amount to top up to the above account, send the evidence of payment to <span className="font-semibold text-purple-700">support@stika.ng</span> and your wallet will be topped up with the verified amount.
+                </div>
+              </div>
+
+              {/* Pay with Monnify Tab Section */}
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <h4 className="font-medium mb-2 text-purple-700">Pay with Monnify</h4>
+                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                  <CreditCard className="h-4 w-4" />
+                  <span>Monnify Gateway (Card/Bank Transfer)</span>
+                </div>
+                <Button className="w-full" disabled>
+                  Coming Soon
+                </Button>
               </div>
 
               <div className="flex gap-3">
@@ -276,13 +270,6 @@ export default function WalletPage() {
                   disabled={isLoading}
                 >
                   Cancel
-                </Button>
-                <Button
-                  className="flex-1 bg-purple-600 hover:bg-purple-700"
-                  onClick={handleFundWallet}
-                  disabled={isLoading || !fundAmount}
-                >
-                  {isLoading ? "Processing..." : "Fund Wallet"}
                 </Button>
               </div>
             </CardContent>

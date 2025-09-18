@@ -55,13 +55,13 @@ export default function HelpPage() {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">Phone Support</p>
-                      <p className="text-sm text-gray-600">+234 803 123 4567</p>
+                      <p className="text-sm text-gray-600">09011153654</p>
                     </div>
                   </div>
                   <Button 
                     variant="outline" 
                     size="sm"
-                    onClick={() => handleContactClick('phone', '+2348031234567')}
+                    onClick={() => handleContactClick('phone', '09011153654')}
                   >
                     Call Now
                   </Button>
@@ -95,13 +95,13 @@ export default function HelpPage() {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">WhatsApp Support</p>
-                      <p className="text-sm text-gray-600">+234 803 123 4567</p>
+                      <p className="text-sm text-gray-600">09011153654</p>
                     </div>
                   </div>
                   <Button 
                     variant="outline" 
                     size="sm"
-                    onClick={() => handleContactClick('whatsapp', '+2348031234567')}
+                    onClick={() => handleContactClick('whatsapp', '09011153654')}
                   >
                     Chat Now
                   </Button>
@@ -149,7 +149,7 @@ export default function HelpPage() {
                 <Button 
                   variant="outline" 
                   className="w-full justify-between"
-                  onClick={() => window.open('https://stika.ng/faq', '_blank')}
+                  onClick={() => window.open('/faq.html', '_blank')}
                 >
                   <span>Frequently Asked Questions</span>
                   <ExternalLink className="h-4 w-4" />
@@ -158,7 +158,7 @@ export default function HelpPage() {
                 <Button 
                   variant="outline" 
                   className="w-full justify-between"
-                  onClick={() => window.open('https://stika.ng/getting-started', '_blank')}
+                  onClick={() => window.open('/getting-started.html', '_blank')}
                 >
                   <span>Getting Started Guide</span>
                   <ExternalLink className="h-4 w-4" />
@@ -167,7 +167,7 @@ export default function HelpPage() {
                 <Button 
                   variant="outline" 
                   className="w-full justify-between"
-                  onClick={() => window.open('https://stika.ng/campaign-guide', '_blank')}
+                  onClick={() => window.open('/campaign-guide.html', '_blank')}
                 >
                   <span>Campaign Creation Guide</span>
                   <ExternalLink className="h-4 w-4" />
@@ -176,7 +176,7 @@ export default function HelpPage() {
                 <Button 
                   variant="outline" 
                   className="w-full justify-between"
-                  onClick={() => window.open('https://stika.ng/pricing', '_blank')}
+                  onClick={() => window.open('/pricing-information.html', '_blank')}
                 >
                   <span>Pricing Information</span>
                   <ExternalLink className="h-4 w-4" />

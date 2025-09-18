@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Stika Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background-color: #f9fafb;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        .logo img {
+            width: 48px;
+            height: 48px;
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #7c3aed;
+        }
+        
+        .content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #1f2937;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            color: #7c3aed;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-left: 4px solid #7c3aed;
+            border-radius: 8px;
+        }
+        
+        .question {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .answer {
+            color: #4b5563;
+        }
+        
+        ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.25rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #7c3aed;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .back-link:hover {
+            background: #6d28d9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="/stika_1.svg" alt="Stika Logo">
+                <h1>Stika</h1>
+            </div>
+            <p>Nigeria's Premier Tricycle Advertising Platform</p>
+        </div>
+        
+        <div class="content">
+            <h1>Frequently Asked Questions</h1>
+            
+            <h2>Getting Started</h2>
+            
+            <div class="faq-item">
+                <div class="question">Q: What is Stika and how does it work?</div>
+                <div class="answer">A: Stika is a tricycle advertising platform that connects agencies with tricycle riders for out-of-home advertising campaigns. Agencies create campaigns, set target locations (geofences), and riders display advertisements while operating in those areas.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: What types of users can access the platform?</div>
+                <div class="answer">A: Stika supports multiple user types:
+                    <ul>
+                        <li><strong>Agency Users</strong>: Create and manage advertising campaigns</li>
+                        <!-- <li><strong>Agency Admins</strong>: Full agency management access</li> -->
+                        <li><strong>Clients</strong>: View-only access to campaigns created for them</li>
+                        <li><strong>Fleet Owners</strong>: Manage tricycle fleets and riders</li>
+                        <li><strong>Riders</strong>: Participate in advertising campaigns</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: How do I get started as an agency?</div>
+                <div class="answer">A: 1. Sign up with your email and verify your account, 2. Complete your agency profile with business information, 3. Add funds to your wallet, 4. Create your first campaign with target locations and requirements.</div>
+            </div>
+            
+            <h2>Account & Profile Management</h2>
+            
+            <div class="faq-item">
+                <div class="question">Q: How do I verify my agency account?</div>
+                <div class="answer">A: Complete your agency profile with business information including registration number, tax ID, address, and contact details. Upload required verification documents through your settings page.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: Can I invite clients to view their campaigns?</div>
+                <div class="answer">A: Yes! You can generate invite codes for clients or send them join requests. Clients get view-only access to campaigns created for them.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: How do I update my agency information?</div>
+                <div class="answer">A: Go to Settings > Profile to update your agency name, address, contact information, and business details.</div>
+            </div>
+            
+            <h2>Campaign Management</h2>
+            
+            <div class="faq-item">
+                <div class="question">Q: What is a geofence and how do I set it up?</div>
+                <div class="answer">A: A geofence is a virtual boundary around a specific location where you want tricycles to display your advertisement. Use our map tool to draw areas around target locations like markets, schools, or business districts.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: How are campaign rates calculated?</div>
+                <div class="answer">A: Rates are suggested based on:
+                    <ul>
+                        <li>Location desirability and traffic volume</li>
+                        <li>Campaign duration and time slots</li>
+                        <li>Geofence size and complexity</li>
+                        <li>Rider availability in the target area</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: Can I pause or stop a campaign once it's started?</div>
+                <div class="answer">A: No, you cannot pause campaign once it's started. You can only stop it.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: How do I track campaign performance?</div>
+                <div class="answer">A: View real-time tracking on your dashboard including:
+                    <ul>
+                        <li>Number of active riders in geofences</li>
+                        <li>Time spent in target areas</li>
+                        <li>Location verification photos</li>
+                        <li>Route coverage maps</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h2>Payments & Billing</h2>
+            
+            <div class="faq-item">
+                <div class="question">Q: What payment methods are accepted?</div>
+                <div class="answer">A: We accept bank transfers, card payments, and other Nigerian payment methods. All payments go to your agency wallet first, then campaigns are funded from there.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: How does the billing work?</div>
+                <div class="answer">A: Campaigns are pre-funded from your wallet balance. Billing occurs based on verified time riders spend in your geofenced areas displaying your advertisement.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: What happens if campaign geofence budget is exhausted before the end date?</div>
+                <div class="answer">A: The Campaign in the geofence automatically stops when it's budget is exhausted by the riders.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: What happens if campaign ends with budget leftover?</div>
+                <div class="answer">A: The difference between the set budget and the actual spent is returned to the funding wallet (client and agency), proportionately.</div>
+            </div>
+            
+            <h2>Fleet & Rider Management</h2>
+            
+            <div class="faq-item">
+                <div class="question">Q: How do riders join campaigns?</div>
+                <div class="answer">A: Riders can signup through the Stika Rider app or Stika Fleet app. The fleet owner can register all riders (including those without android phones) through the Stika Fleet app.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: What verification is required for riders?</div>
+                <div class="answer">A: Riders must provide:
+                    <ul>
+                        <li>Valid tricycle registration</li>
+                        <li>Driver's license/ID verification</li>
+                        <li>Location verification photos</li>
+                        <li>Fleet captain approval (for non-android phone users)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="question">Q: I don't have an android phone, can I join any campaign geofence?</div>
+                <div class="answer">A: Riders without android phones can only join campaign geofences with fixed daily payment rates. The per hour geofences can only be joined by riders with android phones.</div>
+            </div>
+            <div class="faq-item">
+                <div class="question">Q: How do you ensure riders are actually in the target areas?</div>
+                <div class="answer">A: Multiple verification methods:
+                    <ul>
+                        <li>GPS tracking with geofence monitoring</li>
+                        <li>Random verification photo requests</li>
+                        <li>Fleet captain oversight</li>
+                        <li>Time-stamped location logs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h2>Technical Issues</h2>
+            
+            <div class="faq-item">
+                <div class="question">Q: Why can't I create a campaign?</div>
+                <div class="answer">A: Common reasons:
+                    <ul>
+                        <li>Incomplete agency profile</li>
+                        <li>Insufficient wallet balance</li>
+                        <li>Invalid geofence coordinates</li>
+                        <li>Missing campaign requirements</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: The map isn't loading properly. What should I do?</div>
+                <div class="answer">A: Try refreshing the page, clearing browser cache, or using a different browser. Contact support if the issue persists.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question">Q: How do I download campaign reports?</div>
+                <div class="answer">A: Go to your campaign dashboard and click the "Export" or "Download Report" button for detailed analytics and performance data.</div>
+            </div>
+            
+            <a href="javascript:history.back()" class="back-link">← Back to Help</a>
+        </div>
+    </div>
+</body>
+</html>

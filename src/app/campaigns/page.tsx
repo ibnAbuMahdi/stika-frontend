@@ -578,88 +578,80 @@ export default function CampaignsPage() {
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full">
+                <table className="w-full min-w-[800px]" style={{ tableLayout: 'auto' }}>
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/4">
-                        Campaign
-                      </th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
-                        Status
-                      </th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-40">
-                        Budget
-                      </th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
-                        Performance
-                      </th>
-                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
-                        Duration
-                      </th>
-                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
-                        Actions
-                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider w-50">Campaign</th>
+                      <th className="px-1 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap" style={{ maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis' }}>Status</th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider w-10">Budget</th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider w-10">Performance</th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider w-10">Duration</th>
+                      <th className="px-2 py-4 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider w-20">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white">
                     {filteredCampaigns.map((campaign) => (
-                      <tr key={campaign.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4">
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">{campaign.name}</p>
-                            <p className="text-sm text-gray-500">{campaign.targetLocation}</p>
+                      <tr key={campaign.id} className="transition-shadow hover:shadow-md rounded-xl border-b border-gray-100 group">
+                        <td className="px-6 py-5 align-middle">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-purple-100 to-pink-100 text-purple-700 font-bold text-lg">
+                              {campaign.name.charAt(0)}
+                            </div>
+                            <div>
+                              <p className="text-base font-semibold text-gray-900 leading-tight">{campaign.name}</p>
+                              <p className="text-xs text-gray-500">{campaign.targetLocation}</p>
+                            </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
-                          <div className="flex flex-col gap-1">
-                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(campaign.status)}`}>
+                        <td className="px-1 py-5 align-middle text-center whitespace-nowrap" style={{ maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          <div className="flex flex-col items-center gap-1">
+                            <span className={`inline-flex px-3 py-1 text-xs font-bold rounded-full shadow-sm ${getStatusColor(campaign.status)} group-hover:scale-105 transition-transform`}>
                               {getStatusDisplayText(campaign.status)}
                             </span>
                             {campaign.status === 'rejected' && campaign.rejection_reason && (
-                              <p className="text-xs text-red-600 max-w-xs truncate" title={campaign.rejection_reason}>
+                              <span className="text-xs text-red-600 max-w-xs truncate cursor-help" title={campaign.rejection_reason}>
                                 {campaign.rejection_reason}
-                              </p>
+                              </span>
                             )}
                           </div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-5 align-middle">
                           <div>
-                            <p className="text-sm font-medium text-gray-900">
-                              ₦{campaign.spent.toLocaleString()} / ₦{campaign.budget.toLocaleString()}
+                            <p className="text-sm font-semibold text-gray-900">
+                              ₦{campaign.spent.toLocaleString()} <span className="text-gray-400">/</span> ₦{campaign.budget.toLocaleString()}
                             </p>
-                            <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
+                            <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                               <div
-                                className="bg-purple-600 h-2 rounded-full"
-                                style={{ width: `${(campaign.spent / campaign.budget) * 100}%` }}
+                                className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all"
+                                style={{ width: `${Math.min(100, (campaign.spent / campaign.budget) * 100)}%` }}
                               />
                             </div>
-                            <p className="text-xs text-gray-500 mt-1">
+                            <p className="text-xs text-gray-500 mt-2">
                               {campaign.funding_source === 'shared' ? 'Shared funding' : 
                                campaign.funding_source === 'client' ? 'Client funded' : 'Agency funded'}
                             </p>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-5 align-middle">
                           <div>
-                            {/* Impressions display commented out
-                            <p className="text-sm font-medium text-gray-900">
-                              {campaign.impressions.toLocaleString()} impressions
-                            </p>
-                            */}
-                            <p className="text-sm font-medium text-gray-900">{campaign.riders} riders</p>
+                            <p className="text-sm font-semibold text-gray-900">{campaign.riders} riders</p>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-5 align-middle">
                           <div>
-                            <p className="text-sm font-medium text-gray-900">{campaign.duration} days</p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm font-semibold text-gray-900">{campaign.duration} days</p>
+                            <p className="text-xs text-gray-500">
                               {campaign.remainingDays > 0 ? `${campaign.remainingDays} left` : 'Ended'}
                             </p>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-right">
-                          <div className="flex items-center justify-end space-x-1">
-                            {getAvailableActions(campaign).map(action => getActionButton(action, campaign))}
+                        <td className="px-2 py-5 align-middle text-center w-20">
+                          <div className="flex items-center justify-center space-x-2">
+                            {getAvailableActions(campaign).map(action => (
+                              <span className="group/action" key={action}>
+                                {getActionButton(action, campaign)}
+                              </span>
+                            ))}
                           </div>
                         </td>
                       </tr>

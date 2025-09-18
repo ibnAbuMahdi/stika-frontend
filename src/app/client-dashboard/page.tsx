@@ -33,10 +33,11 @@ interface Campaign {
   name: string;
   status: 'draft' | 'submitted' | 'approved' | 'active' | 'completed';
   budget: number;
+  spent?: number;
   start_date: string;
   end_date: string;
-  impressions?: number;
-  clicks?: number;
+  riders?: number;
+  verifications?: number;
   geofences_count: number;
 }
 
@@ -123,10 +124,11 @@ export default function ClientDashboard() {
         name: "Summer Sale Campaign",
         status: "active",
         budget: 150000,
+        spent: 75000,
         start_date: "2024-01-15",
         end_date: "2024-02-15",
-        impressions: 25000,
-        clicks: 1200,
+        riders: 45,
+        verifications: 1200,
         geofences_count: 3
       },
       {
@@ -134,6 +136,7 @@ export default function ClientDashboard() {
         name: "Product Launch - Lagos",
         status: "submitted",
         budget: 200000,
+        spent: 0,
         start_date: "2024-02-01",
         end_date: "2024-02-28",
         geofences_count: 2
@@ -143,6 +146,7 @@ export default function ClientDashboard() {
         name: "Brand Awareness Drive",
         status: "draft",
         budget: 100000,
+        spent: 0,
         start_date: "2024-03-01",
         end_date: "2024-03-15",
         geofences_count: 1
@@ -328,7 +332,7 @@ export default function ClientDashboard() {
 
   const activeCampaigns = campaigns.filter(c => c.status === 'active');
   const totalBudget = campaigns.reduce((sum, c) => sum + c.budget, 0);
-  const totalImpressions = campaigns.reduce((sum, c) => sum + (c.impressions || 0), 0);
+  const totalRiders = campaigns.reduce((sum, c) => sum + (c.riders || 0), 0);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -451,22 +455,22 @@ export default function ClientDashboard() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
                           <p className="text-gray-600">Budget</p>
-                          <p className="font-medium">₦{campaign.budget.toLocaleString()}</p>
+                          <p className="font-medium">₦{(campaign.spent || 0).toLocaleString()}/₦{campaign.budget.toLocaleString()}</p>
                         </div>
                         <div>
                           <p className="text-gray-600">Geofences</p>
                           <p className="font-medium">{campaign.geofences_count}</p>
                         </div>
-                        {campaign.impressions && (
+                        {campaign.riders !== undefined && (
                           <div>
-                            <p className="text-gray-600">Impressions</p>
-                            <p className="font-medium">{campaign.impressions.toLocaleString()}</p>
+                            <p className="text-gray-600">Riders</p>
+                            <p className="font-medium">{campaign.riders}</p>
                           </div>
                         )}
-                        {campaign.clicks && (
+                        {campaign.verifications !== undefined && (
                           <div>
-                            <p className="text-gray-600">Clicks</p>
-                            <p className="font-medium">{campaign.clicks.toLocaleString()}</p>
+                            <p className="text-gray-600">Verifications</p>
+                            <p className="font-medium">{campaign.verifications.toLocaleString()}</p>
                           </div>
                         )}
                       </div>
