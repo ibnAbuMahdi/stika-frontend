@@ -45,11 +45,18 @@
             width: 48px;
             height: 48px;
         }
-        
+        .nav {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
         .logo h1 {
             font-size: 2rem;
             font-weight: bold;
-            color: #7c3aed;
+            color: #660a91;
         }
         
         .content {
@@ -155,7 +162,16 @@
             font-weight: 500;
             transition: background-color 0.2s;
         }
+        .nav a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
         
+        .nav a:hover {
+            color: #2563eb;
+        }
         .back-link:hover {
             background: #6d28d9;
         }
@@ -187,6 +203,11 @@
                 <h1>Stika</h1>
             </div>
             <p>Nigeria's Premier Tricycle Advertising Platform</p>
+            <nav class="nav">
+                <a href="/getting-started.html">Getting Started</a>
+                <a href="/faq.html">FAQ</a>
+                <a href="/pricing-information.html">Pricing Information</a>
+            </nav>
         </div>
         
         <div class="content">

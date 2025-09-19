@@ -19,6 +19,8 @@ import {
   Plus,
   X,
   ChevronDown,
+  Award,
+  Star,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -155,6 +157,8 @@ function CreateCampaignContent() {
   const [showAddGeofence, setShowAddGeofence] = useState(false);
   const [profileComplete, setProfileComplete] = useState<boolean | null>(null);
   const [checkingProfile, setCheckingProfile] = useState(true);
+  const [ppaStatus, setPpaStatus] = useState<any>(null);
+  const [loadingPPA, setLoadingPPA] = useState(false);
   const [clients, setClients] = useState<any[]>([]);
   const [walletBalance, setWalletBalance] = useState<number>(0);
 
@@ -196,6 +200,29 @@ function CreateCampaignContent() {
       }
     ]
   };
+
+  // Load PPA status
+  useEffect(() => {
+    const loadPPAStatus = async () => {
+      try {
+        setLoadingPPA(true);
+        const { apiService } = await import('@/lib/api');
+        
+        if (apiService.isAuthenticated()) {
+          const response = await apiService.get('/agencies/ppa/status/');
+          if (response.success) {
+            setPpaStatus(response.data);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load PPA status:', error);
+      } finally {
+        setLoadingPPA(false);
+      }
+    };
+
+    loadPPAStatus();
+  }, []);
 
   // Load campaign data when in edit mode
   useEffect(() => {
@@ -701,6 +728,53 @@ function CreateCampaignContent() {
             </ol>
           </nav>
         </div>
+
+        {/* PPA Benefits Banner */}
+        {ppaStatus?.has_ppa_status && (
+          <div className="mb-8">
+            <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 flex items-center">
+                        Preferred Partner Benefits Active
+                        <Badge className="ml-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+                          <Star className="w-3 h-3 mr-1" />
+                          PPA
+                        </Badge>
+                      </h3>
+                      <p className="text-gray-600">
+                        This campaign will have <strong>0% platform fees</strong> thanks to your Preferred Partner status
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-green-600">₦0</div>
+                    <div className="text-sm text-gray-500">Platform fees</div>
+                  </div>
+                </div>
+                {ppaStatus.ppa_statuses?.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-purple-200">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600">
+                        Coverage: <strong>{ppaStatus.ppa_statuses[0].coverage_display}</strong>
+                      </span>
+                      <span className="text-gray-600">
+                        Lifetime savings: <strong className="text-green-600">
+                          ₦{ppaStatus.ppa_statuses.reduce((sum: number, status: any) => sum + status.platform_fee_savings, 0).toLocaleString()}
+                        </strong>
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         {/* Step Content */}
         <Card>

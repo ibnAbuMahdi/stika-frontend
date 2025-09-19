@@ -167,6 +167,48 @@ class ApiService {
     }
   }
 
+  // Generic HTTP methods
+  async get<T = any>(endpoint: string, options?: { params?: Record<string, any> }): Promise<ApiResponse<T>> {
+    let url = endpoint;
+    
+    // Add query parameters if provided
+    if (options?.params) {
+      const searchParams = new URLSearchParams();
+      Object.entries(options.params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          searchParams.append(key, String(value));
+        }
+      });
+      if (searchParams.toString()) {
+        url += (endpoint.includes('?') ? '&' : '?') + searchParams.toString();
+      }
+    }
+    
+    return this.request<T>(url, {
+      method: 'GET',
+    });
+  }
+
+  async post<T = any>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'POST',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  async put<T = any>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'PUT',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  async delete<T = any>(endpoint: string): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'DELETE',
+    });
+  }
+
   // Authentication endpoints
   async signup(signupData: SignupData): Promise<ApiResponse<{ user_id: string; user_type: string; email_sent: boolean }>> {
     // Signup endpoint should not include authorization header

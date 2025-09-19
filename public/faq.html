@@ -40,7 +40,14 @@
             gap: 12px;
             margin-bottom: 1rem;
         }
-        
+        .nav {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
         .logo img {
             width: 48px;
             height: 48px;
@@ -49,7 +56,7 @@
         .logo h1 {
             font-size: 2rem;
             font-weight: bold;
-            color: #7c3aed;
+            color: #660a91;
         }
         
         .content {
@@ -73,6 +80,16 @@
             margin: 2rem 0 1rem 0;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid #e5e7eb;
+        }
+        .nav a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav a:hover {
+            color: #2563eb;
         }
         
         .faq-item {
@@ -141,6 +158,11 @@
                 <h1>Stika</h1>
             </div>
             <p>Nigeria's Premier Tricycle Advertising Platform</p>
+            <nav class="nav">
+                <a href="/getting-started.html">Getting Started</a>
+                <a href="/campaign-guide.html">Campaign Guide</a>
+                <a href="/pricing-information.html">Pricing Information</a>
+            </nav>
         </div>
         
         <div class="content">
@@ -209,7 +231,7 @@
             
             <div class="faq-item">
                 <div class="question">Q: Can I pause or stop a campaign once it's started?</div>
-                <div class="answer">A: No, you cannot pause campaign once it's started. You can only stop it.</div>
+                <div class="answer">A: No, you cannot pause campaign once it's started, you can only stop it.</div>
             </div>
             
             <div class="faq-item">

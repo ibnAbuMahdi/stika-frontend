@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { Plus, Edit2, User, Wallet, HelpCircle, LogOut, TrendingUp, Users, DollarSign, BarChart3, Eye, MapPin, Calendar, Filter, Loader, Menu, X, ChevronLeft, ChevronRight, Megaphone } from "lucide-react";
+import { Plus, Edit2, User, Wallet, HelpCircle, LogOut, TrendingUp, Users, DollarSign, BarChart3, Eye, MapPin, Calendar, Filter, Loader, Menu, X, ChevronLeft, ChevronRight, Megaphone, Award, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -16,10 +16,36 @@ export default function AgencyLayout({ children }: AgencyLayoutProps) {
   const [userData, setUserData] = useState<any>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [ppaStatus, setPpaStatus] = useState<any>(null);
+  const [loadingPPA, setLoadingPPA] = useState(false);
 
   useEffect(() => {
     loadUserData();
   }, []);
+
+  useEffect(() => {
+    if (userData?.agency) {
+      loadPPAStatus();
+    }
+  }, [userData]);
+
+  const loadPPAStatus = async () => {
+    try {
+      setLoadingPPA(true);
+      const { apiService } = await import('@/lib/api');
+      
+      if (apiService.isAuthenticated()) {
+        const response = await apiService.get('/agencies/ppa/status/');
+        if (response.success) {
+          setPpaStatus(response.data);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load PPA status:', error);
+    } finally {
+      setLoadingPPA(false);
+    }
+  };
 
   const loadUserData = async () => {
     try {
@@ -129,6 +155,11 @@ export default function AgencyLayout({ children }: AgencyLayoutProps) {
       href: '/wallet',
       icon: Wallet
     },
+    ...(ppaStatus?.has_ppa_status ? [{
+      name: 'PPA Analytics',
+      href: '/ppa-analytics',
+      icon: Star
+    }] : []),
     {
       name: 'Profile',
       href: '/profile',
@@ -186,6 +217,21 @@ export default function AgencyLayout({ children }: AgencyLayoutProps) {
               {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
             </Button>
           </div>
+
+          {/* PPA Badge */}
+          {ppaStatus?.has_ppa_status && !isCollapsed && (
+            <div className="mb-6">
+              <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1.5 w-full justify-center">
+                <Award className="w-3 h-3 mr-1" />
+                Preferred Partner
+              </Badge>
+              {ppaStatus.ppa_statuses?.length > 0 && (
+                <div className="mt-2 text-xs text-gray-500 text-center">
+                  {ppaStatus.ppa_statuses[0].coverage_display}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Navigation */}
           <nav className="space-y-2">

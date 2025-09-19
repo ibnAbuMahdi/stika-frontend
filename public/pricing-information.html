@@ -48,7 +48,8 @@
         
         .logo h1 {
             font-size: 2rem;
-            color: #1f2937;
+            font-weight: bold;
+            color: #660a91;
         }
         
         .subtitle {
@@ -76,11 +77,11 @@
             color: #2563eb;
         }
         
-        h1 {
-            font-size: 2.5rem;
+         h1 {
             color: #1f2937;
-            margin-bottom: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
         }
         
         h2 {
@@ -219,7 +220,7 @@
     <div class="container">
         <div class="header">
             <div class="logo">
-                <img src="/logo.svg" alt="Stika Logo">
+                <img src="/stika_1.svg" alt="Stika Logo">
                 <h1>Stika</h1>
             </div>
             <p class="subtitle">Transparent Pricing for Your Advertising Success</p>
@@ -240,20 +241,44 @@
         <h2>Platform Fees</h2>
         
         <div class="fee-card">
-            <h3>Campaign Creation Fee</h3>
+            <h3>Standard Campaign Creation Fee</h3>
             <p class="fee-highlight">5% of Campaign Budget</p>
             <p>When you create a campaign, Stika charges a one-time platform fee of 5% of your total campaign budget.</p>
             <ul>
                 <li>Fee is charged at campaign creation</li>
                 <li>Non-refundable once campaign is launched</li>
                 <li>Covers platform operations, technology, and support</li>
-                <li>Same rate for all agencies and clients</li>
+                <li>Standard rate for all regular agencies</li>
             </ul>
+        </div>
+
+        <div class="fee-card" style="background: linear-gradient(135deg, #f3e8ff 0%, #fdf2f8 100%); border: 2px solid #a855f7;">
+            <h3 style="color: #7c3aed; display: flex; align-items: center;">
+                🏆 Preferred Partner Agency Benefits
+            </h3>
+            <p class="fee-highlight" style="color: #059669;">0% Platform Fees</p>
+            <p><strong>Exclusive benefit for Preferred Partner Agencies (PPAs):</strong> Zero platform fees on all campaigns.</p>
+            <ul>
+                <li><strong>0% platform fees</strong> instead of the standard 5%</li>
+                <li>Significant cost savings on every campaign</li>
+                <li>Priority client routing and enhanced visibility</li>
+                <li>Awarded based on performance and service quality</li>
+                <li>Available for city-specific or nationwide coverage</li>
+            </ul>
+            <div class="example-box" style="background: #ecfdf5; border-left-color: #059669;">
+                <h4 style="color: #047857;">PPA Savings Example</h4>
+                <ul>
+                    <li>₦500,000 campaign budget</li>
+                    <li>Standard agency pays: ₦25,000 platform fee</li>
+                    <li>PPA pays: ₦0 platform fee</li>
+                    <li><strong style="color: #059669;">Total savings: ₦25,000</strong></li>
+                </ul>
+            </div>
         </div>
 
         <div class="important-note">
             <h4>Important Note</h4>
-            <p>The 5% platform fee is only refundable if you cancel the campaign before it launches. Once a campaign is launched, the fee becomes non-refundable.</p>
+            <p>Platform fees (5% for regular agencies, 0% for PPAs) are only refundable if you cancel the campaign before it launches. Once a campaign is launched, fees become non-refundable.</p>
         </div>
 
         <h2>Campaign Rate Structure</h2>
@@ -310,7 +335,7 @@
         <h2>Cost Calculation Examples</h2>
 
         <div class="example-box">
-            <h4>Example 1: Small Local Campaign (Per Hour Rate)</h4>
+            <h4>Example 1: Small Local Campaign - Regular Agency (Per Hour Rate)</h4>
             <ul>
                 <li><strong>Campaign Budget:</strong> ₦100,000</li>
                 <li><strong>Platform Fee (5%):</strong> ₦5,000</li>
@@ -322,7 +347,20 @@
         </div>
 
         <div class="example-box">
-            <h4>Example 2: Medium Campaign (Fixed Daily Rate)</h4>
+            <h4>Example 2: Small Local Campaign - PPA (Per Hour Rate)</h4>
+            <ul>
+                <li><strong>Campaign Budget:</strong> ₦100,000</li>
+                <li><strong>Platform Fee (0% - PPA Benefit):</strong> ₦0</li>
+                <li><strong>Available for Rider Payments:</strong> ₦100,000</li>
+                <li><strong>Agency Rate:</strong> ₦150/hour</li>
+                <li><strong>Rider Receives:</strong> ₦142.50/hour</li>
+                <li><strong>Total Campaign Hours:</strong> ~667 hours</li>
+                <li><strong style="color: #059669;">Additional Value:</strong> 34 extra hours vs regular agency</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <h4>Example 3: Medium Campaign - Regular Agency (Fixed Daily Rate)</h4>
             <ul>
                 <li><strong>Campaign Budget:</strong> ₦500,000</li>
                 <li><strong>Platform Fee (5%):</strong> ₦25,000</li>
@@ -342,7 +380,7 @@
             <ol style="padding-left: 2rem;">
                 <li><strong>Fund Your Wallet:</strong> Add funds to your agency wallet via bank transfer or card</li>
                 <li><strong>Create Campaign:</strong> Set your budget and rates for each geofence</li>
-                <li><strong>Platform Fee Deduction:</strong> 5% is automatically deducted upon campaign creation</li>
+                <li><strong>Platform Fee Deduction:</strong> 5% (regular agencies) or 0% (PPAs) is automatically deducted upon campaign launch</li>
                 <li><strong>Campaign Launch:</strong> Remaining budget is allocated for rider payments</li>
                 <li><strong>Real-time Tracking:</strong> Monitor spending as riders work</li>
                 <li><strong>Automatic Payments:</strong> Riders are paid based on verified work</li>
@@ -356,8 +394,8 @@
             <ul>
                 <li><strong>Pre-funded Model:</strong> Campaigns must be fully funded before launch</li>
                 <li><strong>Real-time Monitoring:</strong> Track spending against budget in real-time</li>
-                <li><strong>Automatic Stopping:</strong> Campaigns pause when budget is exhausted</li>
-                <li><strong>Budget Refunds:</strong> Unused budget is returned to wallet after campaign ends</li>
+                <li><strong>Automatic Stopping:</strong> Campaigns stop when budget is exhausted</li>
+                <li><strong>Budget Refunds:</strong> Unused budget is returned to funding wallet after campaign ends, proportionately</li>
             </ul>
         </div>
 
