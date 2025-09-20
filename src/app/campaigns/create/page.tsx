@@ -21,6 +21,7 @@ import {
   ChevronDown,
   Award,
   Star,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -1471,7 +1472,11 @@ function CreativeBrandStep({ formData, errors, updateFormData }: StepProps) {
                     type="button"
                     variant="outline"
                     size="sm"
-                    onClick={() => window.open(formData.sticker_design_url, '_blank')}
+                    onClick={() => {
+                      if (typeof formData.sticker_design_url === 'string') {
+                        window.open(formData.sticker_design_url, '_blank');
+                      }
+                    }}
                     className="text-blue-600 hover:text-blue-700"
                   >
                     <Eye className="w-4 h-4 mr-1" />
@@ -1554,7 +1559,11 @@ function CreativeBrandStep({ formData, errors, updateFormData }: StepProps) {
                     type="button"
                     variant="outline"
                     size="sm"
-                    onClick={() => window.open(formData.sticker_certificate_url, '_blank')}
+                    onClick={() => {
+                      if (typeof formData.sticker_certificate_url === 'string') {
+                        window.open(formData.sticker_certificate_url, '_blank');
+                      }
+                    }}
                     className="text-blue-600 hover:text-blue-700"
                   >
                     <Eye className="w-4 h-4 mr-1" />
