@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { Plus, Edit2, User, Wallet, HelpCircle, LogOut, TrendingUp, Users, DollarSign, BarChart3, Eye, MapPin, Calendar, Filter, Loader, Menu, X, ChevronLeft, ChevronRight, Megaphone, Award, Star } from "lucide-react";
+import { Plus, Edit2, User, Wallet, HelpCircle, LogOut, TrendingUp, Users, BarChart3, Eye, MapPin, Calendar, Filter, Loader, Menu, X, ChevronLeft, ChevronRight, Megaphone, Award, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 

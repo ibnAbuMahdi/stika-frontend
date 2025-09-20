@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff, ArrowLeft, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,7 +32,7 @@ export default function SignupPage() {
     // Validation
     const newErrors: {[key: string]: string} = {};
     if (!formData.fullName) newErrors.fullName = "Full name is required";
-    if (!formData.username) newErrors.username = "Username is required";
+    if (!formData.username) newErrors.username = "Company name is required";
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
     if (formData.password.length < 8) newErrors.password = "Password must be at least 8 characters";
@@ -46,6 +48,27 @@ export default function SignupPage() {
       return;
     }
 
+    // Check if user selected "client" - redirect to client signup flow
+    if (formData.userType === "client") {
+      // Pass form data to client signup via URL parameters
+      const clientData = {
+        fullName: formData.fullName,
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        agreeToTerms: formData.agreeToTerms
+      };
+      
+      const params = new URLSearchParams({
+        formData: JSON.stringify(clientData)
+      });
+      
+      router.push(`/client-signup?${params.toString()}`);
+      setIsLoading(false);
+      return;
+    }
+
+    // Continue with agency signup flow
     try {
       // Import API service
       const { apiService } = await import('@/lib/api');
@@ -143,7 +166,7 @@ export default function SignupPage() {
                   id="fullName"
                   name="fullName"
                   type="text"
-                  placeholder="--------"
+                  placeholder="Nnaji Musa Tunde"
                   value={formData.fullName}
                   onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
                   className={errors.fullName ? "border-red-500" : ""}
@@ -155,13 +178,13 @@ export default function SignupPage() {
 
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-                  Username
+                  Company Name
                 </label>
                 <Input
                   id="username"
                   name="username"
                   type="text"
-                  placeholder="Example"
+                  placeholder="Example Company"
                   value={formData.username}
                   onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
                   className={errors.username ? "border-red-500" : ""}
@@ -302,7 +325,15 @@ export default function SignupPage() {
                   className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 focus:ring-2"
                 />
                 <label htmlFor="agreeToTerms" className="text-sm text-gray-700">
-                  I agree to terms & conditions
+                  I agree to{" "}
+                  <a 
+                    href="/terms-and-conditions.html" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-purple-600 hover:text-purple-700 underline"
+                  >
+                    terms & conditions
+                  </a>
                 </label>
               </div>
               {errors.agreeToTerms && (

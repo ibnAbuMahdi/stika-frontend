@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, Clock, MapPin, DollarSign } from "lucide-react";
+import { Users, Clock, MapPin, Banknote } from "lucide-react";
 import { campaignTemplates, CampaignTemplate } from "@/utils/campaignTemplates";
 
 interface CampaignTemplateSelectorProps {
@@ -89,7 +89,7 @@ export default function CampaignTemplateSelector({
                 </div>
                 
                 <div className="flex items-center gap-2 text-sm">
-                  <DollarSign className="w-4 h-4 text-gray-500" />
+                  <Banknote className="w-4 h-4 text-gray-500" />
                   <span>{formatCurrency(template.basicInfo.budget)}</span>
                 </div>
               </div>

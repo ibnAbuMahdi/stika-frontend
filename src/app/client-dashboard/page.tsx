@@ -16,7 +16,7 @@ import {
   Calendar,
   Plus,
   BarChart3,
-  DollarSign,
+  Banknote,
   Users,
   Building2,
   Search,
@@ -386,7 +386,7 @@ export default function ClientDashboard() {
                   <p className="text-3xl font-bold text-gray-900">₦{totalBudget.toLocaleString()}</p>
                 </div>
                 <div className="p-3 bg-blue-100 rounded-lg">
-                  <DollarSign className="h-6 w-6 text-blue-600" />
+                  <Banknote className="h-6 w-6 text-blue-600" />
                 </div>
               </div>
             </CardContent>
@@ -400,7 +400,7 @@ export default function ClientDashboard() {
                   <p className="text-3xl font-bold text-gray-900">₦565,000</p>
                 </div>
                 <div className="p-3 bg-purple-100 rounded-lg">
-                  <DollarSign className="h-6 w-6 text-purple-600" />
+                  <Banknote className="h-6 w-6 text-purple-600" />
                 </div>
               </div>
             </CardContent>
@@ -417,7 +417,7 @@ export default function ClientDashboard() {
                   </p>
                 </div>
                 <div className="p-3 bg-orange-100 rounded-lg">
-                  <DollarSign className="h-6 w-6 text-orange-600" />
+                  <Banknote className="h-6 w-6 text-orange-600" />
                 </div>
               </div>
             </CardContent>
@@ -521,14 +521,37 @@ export default function ClientDashboard() {
                         <p className="text-xs text-gray-600">{agency.agency.city}, {agency.agency.state}</p>
                       </div>
                     ))}
-                    <Button 
-                      className="w-full" 
-                      variant="outline"
-                      onClick={handleBrowseAgencies}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Connect to Another Agency
-                    </Button>
+                    <div className="space-y-2">
+                      <Button 
+                        className="w-full" 
+                        variant="outline"
+                        onClick={handleBrowseAgencies}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Browse Agencies
+                      </Button>
+                      
+                      <div className="text-center text-xs text-gray-500">
+                        or
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <Input
+                          placeholder="Enter invite code"
+                          value={joinForm.invite_code}
+                          onChange={(e) => setJoinForm({...joinForm, invite_code: e.target.value})}
+                        />
+                        <Button 
+                          variant="outline" 
+                          className="w-full"
+                          disabled={!joinForm.invite_code.trim() || isLoading}
+                          onClick={handleInviteCodeJoin}
+                        >
+                          <Link className="h-4 w-4 mr-2" />
+                          {isLoading ? 'Joining...' : 'Join with Code'}
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -609,7 +632,7 @@ export default function ClientDashboard() {
                     className="w-full mb-2" 
                     onClick={() => window.location.href = "/wallet"}
                   >
-                    <DollarSign className="h-4 w-4 mr-2" />
+                    <Banknote className="h-4 w-4 mr-2" />
                     Add Funds
                   </Button>
                   <Button variant="outline" className="w-full">

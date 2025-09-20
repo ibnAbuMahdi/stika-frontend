@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -65,6 +65,7 @@ const INDUSTRIES = [
 
 export default function ClientSignupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [ppaInfo, setPpaInfo] = useState<PPAInfo | null>(null);
@@ -77,6 +78,30 @@ export default function ClientSignupPage() {
     message: "",
   });
   const [errors, setErrors] = useState<any>({});
+  
+  // Store signup data passed from general signup
+  const [signupData, setSignupData] = useState<any>(null);
+
+  // Extract signup data from URL parameters
+  useEffect(() => {
+    const formDataParam = searchParams.get('formData');
+    if (formDataParam) {
+      try {
+        const parsedData = JSON.parse(formDataParam);
+        setSignupData(parsedData);
+        
+        // Pre-fill company name with username if not set
+        if (parsedData.username && !formData.company_name) {
+          setFormData(prev => ({
+            ...prev,
+            company_name: parsedData.username
+          }));
+        }
+      } catch (error) {
+        console.error('Error parsing signup data:', error);
+      }
+    }
+  }, [searchParams, formData.company_name]);
 
   // Check for PPA when city is selected
   useEffect(() => {
@@ -97,13 +122,30 @@ export default function ClientSignupPage() {
             setPpaInfo(response.data);
             if (response.data.has_ppa) {
               setStep(2); // Show PPA overview
+            } else {
+              // No PPA found - auto-create account if signup data exists
+              if (signupData) {
+                await createClientAccount();
+              } else {
+                setPpaInfo({ has_ppa: false });
+              }
             }
           } else {
-            setPpaInfo({ has_ppa: false });
+            // API failed - auto-create account if signup data exists
+            if (signupData) {
+              await createClientAccount();
+            } else {
+              setPpaInfo({ has_ppa: false });
+            }
           }
         } catch (error) {
           console.error('Error checking PPA:', error);
-          setPpaInfo({ has_ppa: false });
+          // On network failure, auto-create account if signup data exists
+          if (signupData) {
+            await createClientAccount();
+          } else {
+            setPpaInfo({ has_ppa: false });
+          }
         } finally {
           setLoading(false);
         }
@@ -111,7 +153,44 @@ export default function ClientSignupPage() {
     };
 
     checkPPA();
-  }, [formData.target_city, formData.target_state]);
+  }, [formData.target_city, formData.target_state, signupData]);
+
+  const createClientAccount = async () => {
+    try {
+      const { apiService } = await import('@/lib/api');
+      
+      const accountData = {
+        fullName: signupData.fullName,
+        username: signupData.username,
+        email: signupData.email,
+        password: signupData.password,
+        confirmPassword: signupData.password, // Same as password for auto-signup
+        userType: "client",
+        agreeToTerms: signupData.agreeToTerms
+      };
+      
+      const response = await apiService.signup(accountData);
+      
+      if (response.success) {
+        // Show success message
+        alert(`Account created successfully! Please check your email (${signupData.email}) to activate your account. You can then login and browse available agencies.`);
+        
+        // Redirect to login page
+        router.push(`/auth/login?email=${encodeURIComponent(signupData.email)}&verification_sent=true`);
+      } else {
+        // Handle errors - show error and let user continue manually
+        console.error('Account creation failed:', response.message);
+        console.error('Validation errors:', response.errors);
+        setPpaInfo({ has_ppa: false });
+        setErrors({ general: response.message || 'Failed to create account. Please try again.' });
+      }
+    } catch (error: any) {
+      console.error('Account creation error:', error);
+      console.error('Account data sent:', accountData);
+      setPpaInfo({ has_ppa: false });
+      setErrors({ general: 'Failed to create account. Please try again.' });
+    }
+  };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -192,8 +271,22 @@ export default function ClientSignupPage() {
   const renderStep1 = () => (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">Tell us about your business</CardTitle>
-        <p className="text-center text-gray-600">We'll connect you with the best advertising agency for your needs</p>
+        <CardTitle className="text-2xl font-bold text-center">
+          {signupData ? 'Complete your business profile' : 'Tell us about your business'}
+        </CardTitle>
+        <p className="text-center text-gray-600">
+          {signupData 
+            ? 'We\'ll check for preferred partner agencies in your area' 
+            : 'We\'ll connect you with the best advertising agency for your needs'
+          }
+        </p>
+        {signupData && (
+          <div className="text-center">
+            <p className="text-sm text-green-600 bg-green-50 border border-green-200 rounded-lg p-2 mt-2">
+              ✓ Account details received from signup: {signupData.fullName} ({signupData.email})
+            </p>
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
@@ -268,7 +361,14 @@ export default function ClientSignupPage() {
 
         {loading && (
           <div className="text-center text-gray-600">
-            Checking for preferred partner agencies...
+            {signupData ? 'Checking for preferred partner agencies...' : 'Checking for preferred partner agencies...'}
+          </div>
+        )}
+
+        {/* Show errors if account creation failed */}
+        {errors.general && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+            <p className="text-red-600 text-sm text-center">{errors.general}</p>
           </div>
         )}
       </CardContent>

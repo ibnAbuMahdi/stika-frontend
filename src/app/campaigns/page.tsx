@@ -17,7 +17,6 @@ interface Campaign {
   duration: number;
   remainingDays: number;
   riders: number;
-  impressions: number;
   targetLocation: string;
   createdAt: string;
   // Workflow fields
@@ -43,7 +42,6 @@ const mockCampaigns: Campaign[] = [
     duration: 30,
     remainingDays: 22,
     riders: 15,
-    impressions: 25000,
     targetLocation: 'Lagos, Victoria Island',
     createdAt: '2025-01-10',
     submitted_at: '2025-01-09T10:00:00Z',
@@ -63,7 +61,6 @@ const mockCampaigns: Campaign[] = [
     duration: 14,
     remainingDays: 14,
     riders: 20,
-    impressions: 0,
     targetLocation: 'Lagos, Ikeja',
     createdAt: '2025-01-12',
     submitted_at: '2025-01-12T09:00:00Z',
@@ -82,7 +79,6 @@ const mockCampaigns: Campaign[] = [
     duration: 7,
     remainingDays: 0,
     riders: 8,
-    impressions: 12000,
     targetLocation: 'Abuja, Wuse',
     createdAt: '2025-01-05',
     submitted_at: '2025-01-04T15:00:00Z',
@@ -102,7 +98,6 @@ const mockCampaigns: Campaign[] = [
     duration: 21,
     remainingDays: 21,
     riders: 12,
-    impressions: 0,
     targetLocation: 'Lagos, Surulere',
     createdAt: '2025-01-13',
     funding_source: 'agency',
@@ -119,7 +114,6 @@ const mockCampaigns: Campaign[] = [
     duration: 10,
     remainingDays: 10,
     riders: 18,
-    impressions: 0,
     targetLocation: 'Lagos, Lekki',
     createdAt: '2025-01-11',
     submitted_at: '2025-01-11T11:30:00Z',
@@ -137,7 +131,6 @@ const mockCampaigns: Campaign[] = [
     duration: 14,
     remainingDays: 14,
     riders: 10,
-    impressions: 0,
     targetLocation: 'Abuja, Maitama',
     createdAt: '2025-01-08',
     submitted_at: '2025-01-08T14:00:00Z',
@@ -180,7 +173,6 @@ export default function CampaignsPage() {
           duration: campaign.geofences_count ? 30 : 0, // Default duration, could be calculated from start/end dates
           remainingDays: 0, // Would need calculation based on actual dates
           riders: campaign.total_required_riders || 0,
-          impressions: campaign.actual_impressions || 0,
           targetLocation: 'Multiple locations', // Could be calculated from geofences
           createdAt: campaign.created_at || new Date().toISOString(),
           funding_source: 'agency' as const, // Default, could come from backend
@@ -505,23 +497,6 @@ export default function CampaignsPage() {
             </CardContent>
           </Card>
 
-{/* Impressions card commented out
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Eye className="h-6 w-6 text-blue-600" />
-                </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Impressions</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {campaigns.reduce((sum, c) => sum + c.impressions, 0).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-*/}
         </div>
 
         {/* Filters and Search */}

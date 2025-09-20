@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { ArrowLeft, DollarSign, Users, AlertTriangle, CheckCircle, Clock, CreditCard } from "lucide-react";
+import { ArrowLeft, Banknote, Users, AlertTriangle, CheckCircle, Clock, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -111,7 +111,7 @@ export default function CampaignFundingPage() {
       case 'pending':
         return { color: 'text-yellow-600', bg: 'bg-yellow-50 border-yellow-200', icon: Clock };
       case 'partial':
-        return { color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200', icon: DollarSign };
+        return { color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200', icon: Banknote };
       case 'funded':
         return { color: 'text-green-600', bg: 'bg-green-50 border-green-200', icon: CheckCircle };
       default:
@@ -224,7 +224,7 @@ export default function CampaignFundingPage() {
                     <div key={transaction.id} className="flex items-center justify-between p-4 border rounded-lg">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                          <DollarSign className="h-5 w-5 text-green-600" />
+                          <Banknote className="h-5 w-5 text-green-600" />
                         </div>
                         <div>
                           <p className="font-medium">{transaction.description}</p>
@@ -244,7 +244,7 @@ export default function CampaignFundingPage() {
                   
                   {campaignData.funding_transactions.length === 0 && (
                     <div className="text-center py-8 text-gray-500">
-                      <DollarSign className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <Banknote className="h-12 w-12 mx-auto mb-4 opacity-50" />
                       <p>No funding transactions yet</p>
                     </div>
                   )}
@@ -266,7 +266,7 @@ export default function CampaignFundingPage() {
                     className="w-full bg-purple-600 hover:bg-purple-700"
                     onClick={() => setShowFundModal(true)}
                   >
-                    <DollarSign className="h-4 w-4 mr-2" />
+                    <Banknote className="h-4 w-4 mr-2" />
                     Provide Funding
                   </Button>
                   

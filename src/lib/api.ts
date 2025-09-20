@@ -69,11 +69,12 @@ class ApiService {
     try {
       const url = `${API_BASE_URL}${endpoint}`;
       
-      // For login/signup/activation endpoints, don't include auth headers
+      // For login/signup/activation/public info endpoints, don't include auth headers
       const isPublicEndpoint = endpoint.includes('/login/') || 
                               endpoint.includes('/signup/') || 
                               endpoint.includes('/activate/') ||
-                              endpoint.includes('/invite-codes/validate');
+                              endpoint.includes('/invite-codes/validate') ||
+                              endpoint.includes('/agencies/ppa/location/'); // Public PPA location info for signup
       
       // Merge headers properly - explicit headers override auth headers
       const defaultHeaders = isPublicEndpoint ? 

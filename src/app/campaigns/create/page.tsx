@@ -11,7 +11,7 @@ import {
   ChevronRight,
   Calendar,
   Users,
-  DollarSign,
+  Banknote,
   Palette,
   Package,
   FileText,
@@ -95,6 +95,8 @@ interface CampaignFormData {
   // Creative & Brand (Global Settings)
   sticker_image: File | null;
   regulatory_approval_document: File | null;
+  sticker_design_url?: string | null; // Existing sticker image URL for edit mode
+  sticker_certificate_url?: string | null; // Existing approval document URL for edit mode
   verification_frequency: number;
   tags: string[];
   notes?: string;
@@ -256,8 +258,10 @@ function CreateCampaignContent() {
               funding_source: 'agency', // Default for now
               agency_contribution: 0,
               client_contribution: 0,
-              sticker_image: null, // Will need to handle existing files differently
-              regulatory_approval_document: null,
+              sticker_image: null, // Will be handled by preview URLs
+              regulatory_approval_document: null, // Will be handled by preview URLs
+              sticker_design_url: campaign.sticker_design_url || null, // Existing sticker image URL
+              sticker_certificate_url: campaign.sticker_certificate_url || null, // Existing approval document URL
               verification_frequency: campaign.verification_frequency || 3,
               tags: campaign.tags || [],
               notes: campaign.notes || '',
@@ -784,7 +788,7 @@ function CreateCampaignContent() {
               {currentStep === 2 && <Palette className="h-5 w-5" />}
               {currentStep === 3 && <MapPin className="h-5 w-5" />}
               {currentStep === 4 && <Package className="h-5 w-5" />}
-              {currentStep === 5 && <DollarSign className="h-5 w-5" />}
+              {currentStep === 5 && <Banknote className="h-5 w-5" />}
               {currentStep === 6 && <CheckCircle className="h-5 w-5" />}
               {steps.find(s => s.id === currentStep)?.title}
             </CardTitle>
@@ -1198,7 +1202,7 @@ function FundingSourceStep({
               >
                 <CardContent className="p-4 text-center">
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <DollarSign className="h-6 w-6 text-green-600" />
+                    <Banknote className="h-6 w-6 text-green-600" />
                   </div>
                   <h3 className="font-semibold mb-2">Shared Funding</h3>
                   <p className="text-sm text-gray-600">Both agency and client contribute</p>
@@ -1350,6 +1354,18 @@ function CreativeBrandStep({ formData, errors, updateFormData }: StepProps) {
   const [stickerPreview, setStickerPreview] = useState<string | null>(null);
   const [documentPreview, setDocumentPreview] = useState<string | null>(null);
 
+  // Initialize previews with existing URLs in edit mode
+  useEffect(() => {
+    if (formData.sticker_design_url && !stickerPreview) {
+      setStickerPreview(formData.sticker_design_url);
+    }
+    if (formData.sticker_certificate_url && !documentPreview) {
+      // For documents, show filename from URL
+      const filename = formData.sticker_certificate_url.split('/').pop() || 'Existing Document';
+      setDocumentPreview(filename);
+    }
+  }, [formData.sticker_design_url, formData.sticker_certificate_url, stickerPreview, documentPreview]);
+
   const handleStickerImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -1399,12 +1415,12 @@ function CreativeBrandStep({ formData, errors, updateFormData }: StepProps) {
   };
 
   const removeStickerImage = () => {
-    updateFormData({ sticker_image: null });
+    updateFormData({ sticker_image: null, sticker_design_url: null });
     setStickerPreview(null);
   };
 
   const removeRegulatoryDocument = () => {
-    updateFormData({ regulatory_approval_document: null });
+    updateFormData({ regulatory_approval_document: null, sticker_certificate_url: null });
     setDocumentPreview(null);
   };
 
@@ -1450,6 +1466,18 @@ function CreativeBrandStep({ formData, errors, updateFormData }: StepProps) {
                 />
               </div>
               <div className="flex justify-center gap-2">
+                {formData.sticker_design_url && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => window.open(formData.sticker_design_url, '_blank')}
+                    className="text-blue-600 hover:text-blue-700"
+                  >
+                    <Eye className="w-4 h-4 mr-1" />
+                    View Original
+                  </Button>
+                )}
                 <label htmlFor="stickerImageReplace" className="cursor-pointer">
                   <span className="inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                     Replace
@@ -1521,6 +1549,18 @@ function CreativeBrandStep({ formData, errors, updateFormData }: StepProps) {
                 </div>
               </div>
               <div className="flex justify-center gap-2">
+                {formData.sticker_certificate_url && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => window.open(formData.sticker_certificate_url, '_blank')}
+                    className="text-blue-600 hover:text-blue-700"
+                  >
+                    <Eye className="w-4 h-4 mr-1" />
+                    View Original
+                  </Button>
+                )}
                 <label htmlFor="regulatoryDocumentReplace" className="cursor-pointer">
                   <span className="inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                     Replace
@@ -2064,7 +2104,7 @@ function ReviewSubmitStep({ formData, clients }: { formData: CampaignFormData; c
       <Card className={totalCampaignCost > (formData.agency_contribution + formData.client_contribution) ? 'border-amber-200 bg-amber-50' : 'border-green-200 bg-green-50'}>
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
-            <DollarSign className="h-5 w-5" />
+            <Banknote className="h-5 w-5" />
             Funding vs Total Cost
           </CardTitle>
         </CardHeader>

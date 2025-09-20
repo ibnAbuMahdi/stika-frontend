@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { TrendingUp, Users, DollarSign, BarChart3, Eye, MapPin, Calendar, Filter, Loader } from "lucide-react";
+import { TrendingUp, Users, Banknote, BarChart3, Eye, MapPin, Calendar, Filter, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -336,7 +336,7 @@ export default function DashboardPage() {
                   </p>
                 </div>
                 <div className="p-3 bg-purple-100 rounded-full">
-                  <DollarSign className="h-6 w-6 text-purple-600" />
+                  <Banknote className="h-6 w-6 text-purple-600" />
                 </div>
               </div>
             </CardContent>
@@ -398,7 +398,11 @@ export default function DashboardPage() {
               <CardContent>
                 <div className="space-y-4">
                   {filteredCampaigns.slice(0, 5).map((campaign) => (
-                    <div key={campaign.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div 
+                      key={campaign.id} 
+                      className="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:bg-gray-50 hover:border-purple-300 transition-colors"
+                      onClick={() => router.push(`/campaigns/${campaign.id}`)}
+                    >
                       <div className="flex items-center gap-4">
                         <div>
                           <h4 className="font-medium text-gray-900">{campaign.name}</h4>

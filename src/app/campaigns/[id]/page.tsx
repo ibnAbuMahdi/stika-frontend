@@ -12,7 +12,7 @@ import {
   AlertCircle,
   MapPin,
   Users,
-  DollarSign,
+  Banknote,
   Calendar,
   FileText,
   Upload,
@@ -37,7 +37,6 @@ interface Campaign {
   start_date: string;
   end_date: string;
   riders_assigned: number;
-  impressions?: number;
   geofences_count: number;
   created_at: string;
   campaign_type: string;
@@ -75,7 +74,6 @@ export default function CampaignDetailPage() {
       start_date: "2024-01-15",
       end_date: "2024-03-15",
       riders_assigned: 45,
-      impressions: 125000,
       geofences_count: 5,
       created_at: "2024-01-10",
       campaign_type: "brand_awareness",
@@ -549,7 +547,7 @@ export default function CampaignDetailPage() {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4 text-gray-600" />
+                    <Banknote className="h-4 w-4 text-gray-600" />
                     <span className="text-sm text-gray-600">Budget</span>
                   </div>
                   <span className="font-medium">₦{campaign.budget.toLocaleString()}</span>
@@ -557,7 +555,7 @@ export default function CampaignDetailPage() {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4 text-gray-600" />
+                    <Banknote className="h-4 w-4 text-gray-600" />
                     <span className="text-sm text-gray-600">Spent</span>
                   </div>
                   <span className="font-medium">₦{campaign.spent.toLocaleString()}</span>
@@ -579,12 +577,6 @@ export default function CampaignDetailPage() {
                   <span className="font-medium">{campaign.geofences_count}</span>
                 </div>
 
-                {campaign.impressions && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Impressions</span>
-                    <span className="font-medium">{campaign.impressions.toLocaleString()}</span>
-                  </div>
-                )}
               </CardContent>
             </Card>
 
